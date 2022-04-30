@@ -2,7 +2,9 @@
 #define BINARY_HEAP_H
 
 #include <cassert>
+#include <iostream>
 #include "Vector.h"
+using namespace std;
 
 template <typename T>
 class BinaryHeap
@@ -19,7 +21,7 @@ public:
 		: theheap(items.size() + 10), theSize(items.size())
 	{
 		// copy items to heap; leave field at index 0 unoccupied
-		for (int i = 0; i < items.size()l ++i)
+		for (int i = 0; i < items.size(); ++i)
 			theheap[i + 1] = items[i];
 		buildHeap();
 	}
@@ -72,12 +74,20 @@ public:
 		percolateDown(1);
 	}
 
-	makeEmpty()
+	void makeEmpty()
 	{
 		theSize = 0;
 	}
 
-
+	void print_heap()
+	{
+		cout << endl;
+		if (empty())
+			cout << "empty heap";
+		else
+			print_heap(1, 0);
+		cout << endl;
+	}
 
 
 private:
@@ -108,6 +118,17 @@ private:
 				break;
 		}
 		theheap[hole] = tmp;
+	}
+
+	void print_heap(int index, int offset)
+	{
+		if (index > theSize)
+			return;
+		for (int i = 1; i <= offset; i++)
+			cout << "..";
+		cout << theheap[index] << endl;
+		print_heap(2 * index, offset + 1);
+		print_heap(2 * index + 1, offset + 1);
 	}
 
 };
